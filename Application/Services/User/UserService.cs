@@ -40,5 +40,10 @@ namespace Application.Services.User
         {
             await _userRepository.UpdateUserAsync(user);
         }
+
+        public async Task<Domain.Entities.User?> GetUserByUsernameAsync(string username)
+        {
+            return await _userRepository.GetUserByUsernameAsync(username);
+        }
     }
 }

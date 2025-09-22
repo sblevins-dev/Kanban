@@ -34,17 +34,6 @@ namespace Kanban.Server.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] User user)
-        {
-            if (user == null)
-            {
-                return BadRequest();
-            }
-            await _userService.AddUserAsync(user);
-            return Ok();
-        }
-
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser([FromBody] User user)
         {
