@@ -36,6 +36,21 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddControllers();
 
+var allowedOrigin = builder.Environment.IsDevelopment()
+    ? "https://127.0.0.1:64533" // Angular dev URL
+    : "https://your-production-url.com"; // Replace with your production URL
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularDev", policy =>
+    {
+        policy.WithOrigins(allowedOrigin)  // Angular dev URL
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer(options =>
     {
@@ -57,6 +72,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseCors("AllowAngularDev");
 
 app.UseDefaultFiles();
 app.UseStaticFiles();

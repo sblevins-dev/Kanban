@@ -1,0 +1,32 @@
+<div class="flex gap-4 p-4 h-full">
+  <!-- Loop through columns -->
+  <div *ngFor="let column of columns" class="flex-1 bg-gray-100 rounded p-2">
+    
+    <!-- Column header -->
+    <h3 class="font-bold mb-2 text-center">{{ column.display }}</h3>
+
+    <!-- Drop area -->
+    <div
+      class="space-y-2 min-h-[200px]"
+      (dragover)="onDragOver($event)"
+      (drop)="onDrop($event, column.name)"
+    >
+      <!-- Tasks in this column -->
+      <div
+        *ngFor="let task of column.tasks"
+        class="bg-white p-2 rounded shadow cursor-move"
+        draggable="true"
+        (dragstart)="onDragStart($event, task, column.name)"
+      >
+        <!-- Task title and description -->
+        <div class="font-semibold">{{ task.title }}</div>
+        <div class="text-sm text-gray-600">{{ task.description }}</div>
+
+        <!-- Optional assignee -->
+        <div *ngIf="task.assigneeId" class="text-xs text-blue-500 mt-1">
+          Assigned to: {{ task.assigneeId }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
