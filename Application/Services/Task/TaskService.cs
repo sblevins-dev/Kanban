@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.DTOs.Task;
 using Domain.Entities;
 using Domain.Interfaces;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Services
+namespace Application.Services.Task
 {
     public class TaskService : ITaskService
     {
@@ -18,7 +19,7 @@ namespace Application.Services
             _taskRepository = taskRepository;
         }
 
-        public async Task AddTaskAsync(TaskCreateDto dto)
+        public async System.Threading.Tasks.Task AddTaskAsync(TaskCreateDto dto)
         {
             var task = new TaskItem
             {
@@ -33,9 +34,9 @@ namespace Application.Services
             await _taskRepository.AddAsync(task);
         }
 
-        public Task DeleteTaskAsync(int id)
+        public async System.Threading.Tasks.Task DeleteTaskAsync(int id)
         {
-            return _taskRepository.DeleteAsync(id);
+            await _taskRepository.DeleteAsync(id);
         }
 
         public async Task<IEnumerable<TaskDto>> GetAllTasksAsync()
@@ -77,7 +78,7 @@ namespace Application.Services
             };
         }
 
-        public async Task UpdateTaskAsync(int taskId, TaskUpdateDto dto)
+        public async System.Threading.Tasks.Task UpdateTaskAsync(int taskId, TaskUpdateDto dto)
         {
             var task = await _taskRepository.GetByIdAsync(taskId);
             if (task == null) throw new Exception("Task not found");

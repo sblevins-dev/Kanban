@@ -1,5 +1,5 @@
-﻿using Application.DTOs;
-using Application.Services;
+﻿using Application.DTOs.Task;
+using Application.Services.Task;
 using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -47,9 +47,9 @@ namespace Kanban.Server.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTask(int id, [FromBody] TaskItem task)
+        public async Task<IActionResult> UpdateTask(int id, [FromBody] TaskUpdateDto task)
         {
-            if (task == null || task.Id != id)
+            if (task == null)
             {
                 return BadRequest();
             }
@@ -58,7 +58,7 @@ namespace Kanban.Server.Controllers
             {
                 return NotFound();
             }
-            await _taskService.UpdateTaskAsync(task);
+            await _taskService.UpdateTaskAsync(id, task);
             return NoContent();
         }
 

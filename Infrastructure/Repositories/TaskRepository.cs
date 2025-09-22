@@ -51,10 +51,10 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public Task UpdateAsync(TaskItem task)
+        public async Task UpdateAsync(TaskItem task)
         {
             _context.Tasks.Update(task);
-            return _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }
