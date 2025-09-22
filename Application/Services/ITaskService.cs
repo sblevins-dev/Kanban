@@ -13,7 +13,7 @@ namespace Application.Services
         Task<IEnumerable<TaskDto>> GetAllTasksAsync();
         Task<TaskDto?> GetTaskByIdAsync(int id);
         Task AddTaskAsync(TaskCreateDto dto);
-        Task UpdateTaskAsync(TaskItem task);
+        Task UpdateTaskAsync(int taskId, TaskUpdateDto task);
         Task DeleteTaskAsync(int id);
     }
 }

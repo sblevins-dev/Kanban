@@ -77,9 +77,20 @@ namespace Application.Services
             };
         }
 
-        public Task UpdateTaskAsync(TaskItem task)
+        public async Task UpdateTaskAsync(int taskId, TaskUpdateDto dto)
         {
-            return _taskRepository.UpdateAsync(task);
+            var task = await _taskRepository.GetByIdAsync(taskId);
+            if (task == null) throw new Exception("Task not found");
+
+            if (!string.IsNullOrEmpty(dto.Title)) task.Title = dto.Title;
+            if (!string.IsNullOrEmpty(dto.Description)) task.Description = dto.Description;
+            if (dto.Status.HasValue) task.Status = dto.Status.Value;
+
+            if (dto.SprintId.HasValue) task.SprintId = dto.SprintId.Value;
+            if (dto.AssigneeId.HasValue) task.AssigneeId = dto.AssigneeId.Value;
+            else if (dto.AssigneeId == null) task.AssigneeId = null;
+
+            await _taskRepository.UpdateAsync(task);
         }
     }
 }
